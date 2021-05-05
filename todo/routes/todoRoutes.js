@@ -36,11 +36,12 @@ router.get('/:id', (req, res) => {
   let todoId = req.params.id;
   
   let foundTodo = todosDB.find((todo) => todo.uniqueId == todoId)
-
+  if (foundTodo) {
   res.json({"code" :"SUCCESS", "success": foundTodo, "error":null});
-
+  } else {
   // TODO return a proper response to the user when no todo is found.
-
+  res.json({"code" :"error", "error": err})
+  }
 }); 
 
 
