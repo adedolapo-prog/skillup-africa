@@ -40,16 +40,23 @@ router.get('/:id', (req, res) => {
   res.json({"code" :"SUCCESS", "success": foundTodo, "error":null});
   } else {
   // TODO return a proper response to the user when no todo is found.
-  res.json({"code" :"error", "error": err})
+  res.json({"code" :404, "message" : "no todo is found", "error": err})
   }
 }); 
 
 
 router.delete('/:id', (req, res) => {
-
+  let todoID = req.params.id
+  
+  let toDelete = todosDB.find((todo) => todo.uniqueId == todoId)
+  let index = todosDB.indexOf(toDelete)
+  if (index > -1) {
+    todosDB.splice(index, 1)
   // TODO Implement this route 
   res.send('todo deleted');
-
+  } else {
+    res.json({"code" :404, "message" : "no todo is found", "error": err})
+  }
 });  
 
 module.exports = router;
